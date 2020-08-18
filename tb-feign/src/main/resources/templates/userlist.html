@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/js/bootstrap3/css/bootstrap.css}">
+    <script th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <script th:src="@{/js/bootstrap3/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{/js/bootstrap-table/bootstrap-table.css}">
+    <script th:src="@{/js/bootstrap-table/bootstrap-table.js}"></script>
+    <script th:src="@{/js/bootstrap-table/locale/bootstrap-table-zh-CN.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css}">
+    <script th:src="@{/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js}"></script>
+    <script th:src="@{/js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
+
+    <script th:src="@{/js/bootstrap-bootbox/bootbox.all.min.js}"></script>
+</head>
+<body>
+<div class="col-sm-1 ">
+    <button onclick="openUserDialog()" class="btn  btn-success btn-block " type="button" style="width: 100px">新增</button>
+</div>
+<div class="table" id="userTab"></div>
+</body>
+<script>
+    $(function(){
+        initUserTab();
+
+    })
+    function initUserTab(){
+        $('#userTab').bootstrapTable({
+            url:'../user/selectUserList',//获取数据地址
+            method:'post',
+            contentType:'application/x-www-form-urlencoded',//post请求按照表单方式
+
+            columns:[
+                [
+                    {field:'id',title:'ID',align:'center',width:150},
+                    {field:'name',title:'姓名',align:'center',width:150},
+                    {field:'account',title:'账号',align:'center',width:150},
+                    {field:'password',title:'密码',align:'center',width:150},
+                    {field:'sex',title:'性别',align:'center',width:150,
+                        formatter:function (value) {
+
+                            var sex = "";
+                            if (value==1){
+                                return sex = "男";
+                            }
+                            if (value==2){
+                                return sex = "女";
+                            }
+                        }
+                    },
+                    {field:'birthday',title:'注册账号时间',align:'center',width:150},
+                    {field:'typeName',title:'账号状态',width:150},
+                    {field:'cz',title:'操作',width:150,align:'center',
+                        formatter:function(value,row,index){
+                            var cz = "<a href='javascript:deleteUserById("+row.id+")'>删除</a>  ||  <a href='javascript:editUserById()'>修改</a>"
+                            return cz;
+                        }
+                    }
+                ]
+            ]
+        })
+    }
+    function deleteUserById(id) {
+        bootbox.confirm("确定要删除吗?",function(r){
+            if (r) {
+                $.post('../deleteUserById',{id:id},function(data){
+                    $('#userTab').bootstrapTable("refresh");
+                })
+            }
+        })
+    }
+    var res;
+    function createAddContent(url){
+        $.ajax({
+            url:url,
+            async:false,
+            success:function(data){
+                res = data;
+            }
+        });
+        return res;
+    }
+    function openUserDialog(){
+
+        bootbox.dialog({
+            title: '新增用户',
+            message: createAddContent('../page/addUserPage'),
+            size: 'large',
+            buttons: {
+                cancel: {
+                    label: "取消",
+                    className: 'btn-danger',
+                    callback: function(){
+                        alert('确定取消吗！');
+                    }
+                },
+
+                ok: {
+                    label: "保存",
+                    className: 'btn-info',
+                    callback: function(){
+                        $.ajax({
+                            url:"../addUserInfo",
+                            type:"post",
+                            data:$("#addUserForm").serialize(),
+                            success:function(data){
+                                $('#userTab').bootstrapTable("refresh");
+                            }
+                        })
+                    }
+                }
+            }
+        })
+
+    }
+
+    function editUserById(id){
+        bootbox.dialog({
+            title: '编辑用户',
+            message: createAddContent('../page/editUserPage?id='+id),
+            size: 'large',
+            buttons: {
+                cancel: {
+                    label: "取消",
+                    className: 'btn-danger',
+                    callback: function(){
+
+                    }
+                },
+
+                ok: {
+                    label: "确认编辑",
+                    className: 'btn-info',
+                    callback: function(){
+                        $.ajax({
+                            url:"../user/addUser",
+                            type:"post",
+                            data:$("#addUserForm").serialize(),
+                            success:function(data){
+                                $('#userTab').bootstrapTable("refresh");
+                            }
+                        })
+                    }
+                }
+            }
+        })
+
+    }
+</script>
+</html>
