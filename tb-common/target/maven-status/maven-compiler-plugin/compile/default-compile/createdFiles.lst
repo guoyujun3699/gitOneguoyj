@@ -1,0 +1,6 @@
+com\jk\utils\Constant.class
+com\jk\entity\UserEntity.class
+com\jk\utils\StringUtil.class
+com\jk\utils\RedisConfig.class
+com\jk\entity\TypeEntity.class
+com\jk\utils\RedisUtil.class

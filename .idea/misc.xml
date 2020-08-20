@@ -9,7 +9,14 @@
         <option value="$PROJECT_DIR$/tb-provider/pom.xml" />
         <option value="$PROJECT_DIR$/tb-feign/pom.xml" />
         <option value="$PROJECT_DIR$/tb-provider-two/pom.xml" />
+        <option value="$PROJECT_DIR$/tb-config-client/pom.xml" />
+        <option value="$PROJECT_DIR$/tb-config-server/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/seata-order-service/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">

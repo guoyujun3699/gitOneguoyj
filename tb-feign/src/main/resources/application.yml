@@ -3,16 +3,7 @@ server:
 spring:
   application:
     name: tb-feign
-  redis:
-    database: 0
-    host: localhost
-    port: 6379
-    timeout: 6000ms
-    jedis:
-      pool:
-        max-active: 200
-        max-wait: -1ms
-        max-idle: 0
+
 eureka:
   client:
     service-url:

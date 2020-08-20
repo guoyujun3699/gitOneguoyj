@@ -8,18 +8,29 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="tb-common" />
-        <module name="tb-provider" />
-        <module name="tb-eureka" />
         <module name="tb-service-api" />
+        <module name="tb-config-server" />
+        <module name="tb-eureka" />
+        <module name="tb-config-client" />
         <module name="tb-provider-two" />
         <module name="tb-feign" />
+        <module name="tb-provider" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="seata-account-service" target="1.8" />
+      <module name="seata-order-service" target="1.8" />
+      <module name="seata-storage-service" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="seata-account-service" options="-parameters" />
+      <module name="seata-order-service" options="-parameters" />
+      <module name="seata-storage-service" options="-parameters" />
       <module name="tb-common" options="-parameters" />
+      <module name="tb-config-client" options="-parameters" />
+      <module name="tb-config-server" options="-parameters" />
       <module name="tb-eureka" options="-parameters" />
       <module name="tb-feign" options="-parameters" />
       <module name="tb-provider" options="-parameters" />
